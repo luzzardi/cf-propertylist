@@ -1,45 +1,20 @@
 <?php
-/**
- * CFPropertyList
- * {@link http://developer.apple.com/documentation/Darwin/Reference/ManPages/man5/plist.5.html Property Lists}
- * @author Rodney Rehm <rodney.rehm@medialize.de>
- * @author Christian Kruse <cjk@wwwtech.de>
- * @package plist
- * @version $Id$
- * @example example-read-01.php Read an XML PropertyList
- * @example example-read-02.php Read a Binary PropertyList
- * @example example-read-03.php Read a PropertyList without knowing the type
- * @example example-create-01.php Using the CFPropertyList API
- * @example example-create-02.php Using {@link CFTypeDetector}
- * @example example-create-03.php Using {@link CFTypeDetector} with {@link CFDate} and {@link CFData}
- * @example example-modify-01.php Read, modify and save a PropertyList
- */
+namespace CFPropertyList;
+use CFPropertyList\Exceptions\PListException;
+use CFPropertyList\Exceptions\IOException;
+use CFPropertyList\CFBinaryPropertyList;
+use CFPropertyList\CFTypeDetector;
+use CFPropertyList\Types\CFType;
+use CFPropertyList\Types\CFDictionary;
+use CFPropertyList\Types\CFString;
+use CFPropertyList\Types\CFArray;
+use CFPropertyList\Types\CFData;
+use CFPropertyList\Types\CFDate;
+use CFPropertyList\Types\CFBoolean;
+use CFPropertyList\Types\CFNumber;
 
-/**
- * Require IOException, PListException, CFType and CFBinaryPropertyList
- */
-$plistDirectory = dirname(__FILE__);
-require_once($plistDirectory.'/IOException.php');
-require_once($plistDirectory.'/PListException.php');
-require_once($plistDirectory.'/CFType.php');
-require_once($plistDirectory.'/CFBinaryPropertyList.php');
-require_once($plistDirectory.'/CFTypeDetector.php');
 
-/**
- * Property List
- * Interface for handling reading, editing and saving Property Lists as defined by Apple.
- * @author Rodney Rehm <rodney.rehm@medialize.de>
- * @author Christian Kruse <cjk@wwwtech.de>
- * @package plist
- * @example example-read-01.php Read an XML PropertyList
- * @example example-read-02.php Read a Binary PropertyList
- * @example example-read-03.php Read a PropertyList without knowing the type
- * @example example-create-01.php Using the CFPropertyList API
- * @example example-create-02.php Using {@link CFTypeDetector}
- * @example example-create-03.php Using {@link CFTypeDetector} with {@link CFDate} and {@link CFData}
- * @example example-create-04.php Using and extended {@link CFTypeDetector}
- */
-class CFPropertyList extends CFBinaryPropertyList implements Iterator {
+class CFPropertyList extends CFBinaryPropertyList implements \Iterator {
   /**
    * Format constant for binary format
    * @var integer
@@ -93,15 +68,15 @@ class CFPropertyList extends CFBinaryPropertyList implements Iterator {
    * @var array
    */
   protected static $types = array(
-    'string' => 'CFString',
-    'real' => 'CFNumber',
-    'integer' => 'CFNumber',
-    'date' => 'CFDate',
-    'true' => 'CFBoolean',
-    'false' => 'CFBoolean',
-    'data' => 'CFData',
-    'array' => 'CFArray',
-    'dict' => 'CFDictionary'
+    'string' => 'CFPropertyList\Types\CFString',
+    'real' => 'CFPropertyList\Types\CFNumber',
+    'integer' => 'CFPropertyList\Types\CFNumber',
+    'date' => 'CFPropertyList\Types\CFDate',
+    'true' => 'CFPropertyList\Types\CFBoolean',
+    'false' => 'CFPropertyList\Types\CFBoolean',
+    'data' => 'CFPropertyList\Types\CFData',
+    'array' => 'CFPropertyList\Types\CFArray',
+    'dict' => 'CFPropertyList\Types\CFDictionary'
  );
 
 
@@ -208,8 +183,8 @@ class CFPropertyList extends CFBinaryPropertyList implements Iterator {
         }
         // else: xml format, break not neccessary
       case CFPropertyList::FORMAT_XML:
-        $doc = new DOMDocument();
-        if(!$doc->load($file)) throw new DOMException();
+        $doc = new \DOMDocument();
+        if(!$doc->load($file)) throw new \DOMException();
         $this->import($doc->documentElement, $this);
         break;
     }
@@ -250,8 +225,8 @@ class CFPropertyList extends CFBinaryPropertyList implements Iterator {
         }
         // else: xml format, break not neccessary
       case CFPropertyList::FORMAT_XML:
-        $doc = new DOMDocument();
-        if(!$doc->loadXML($str)) throw new DOMException();
+        $doc = new \DOMDocument();
+        if(!$doc->loadXML($str)) throw new \DOMException();
         $this->import($doc->documentElement, $this);
         break;
     }
@@ -263,7 +238,7 @@ class CFPropertyList extends CFBinaryPropertyList implements Iterator {
    * @param CFDictionary|CFArray|CFPropertyList $parent
    * @return void
    */
-  protected function import(DOMNode $node, $parent) {
+  protected function import(\DOMNode $node, $parent) {
     // abort if there are no children
     if(!$node->childNodes->length) return;
 
@@ -374,7 +349,7 @@ class CFPropertyList extends CFBinaryPropertyList implements Iterator {
    * @return string The XML content
    */
   public function toXML($formatted=false) {
-    $domimpl = new DOMImplementation();
+    $domimpl = new \DOMImplementation();
     // <!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
     $dtd = $domimpl->createDocumentType('plist', '-//Apple Computer//DTD PLIST 1.0//EN', 'http://www.apple.com/DTDs/PropertyList-1.0.dtd');
     $doc = $domimpl->createDocument(null, "plist", $dtd);

@@ -8,11 +8,12 @@
     "authors": [
         {
             "name": "Ronhill",
-            "email": "ronhill.ilya@gmail.com",
+            "email": "ronhill.ilya@gmail.com"
         }
     ],
     "require": {
-        "php": ">=5.3.0"
+        "php": ">=5.3.0",
+        "EHER/PHPUnit": ">=1.2"
     },
     "autoload": {
         "psr-0": {"CFPropertyList": "src/"}

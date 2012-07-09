@@ -1,21 +1,17 @@
 <?php
-/**
- * CFPropertyList
- * {@link http://developer.apple.com/documentation/Darwin/Reference/ManPages/man5/plist.5.html Property Lists}
- * @author Rodney Rehm <rodney.rehm@medialize.de>
- * @author Christian Kruse <cjk@wwwtech.de>
- * @package plist
- * @version $Id$
- */
+namespace CFPropertyList;
+use CFPropertyList\CFTypeDetector;
+use CFPropertyList\Types\CFType;
+use CFPropertyList\Types\CFDictionary;
+use CFPropertyList\Types\CFString;
+use CFPropertyList\Types\CFData;
+use CFPropertyList\Types\CFDate;
+use CFPropertyList\Types\CFBoolean;
+use CFPropertyList\Types\CFArray;
+use CFPropertyList\Types\CFNumber;
+use CFPropertyList\Exceptions\PListException;
+use CFPropertyList\Exceptions\IOException;
 
-/**
- * Facility for reading and writing binary PropertyLists. Ported from {@link http://www.opensource.apple.com/source/CF/CF-476.15/CFBinaryPList.c CFBinaryPList.c}.
- * @author Rodney Rehm <rodney.rehm@medialize.de>
- * @author Christian Kruse <cjk@wwwtech.de>
- * @package plist
- * @example example-read-02.php Read a Binary PropertyList
- * @example example-read-03.php Read a PropertyList without knowing the type
- */
 abstract class CFBinaryPropertyList {
   /**
    * Content of the plist (unparsed string)

@@ -1,16 +1,16 @@
 <?php
+namespace CFPropertyList;
+use CFPropertyList\Types\CFType;
+use CFPropertyList\Types\CFDictionary;
+use CFPropertyList\Types\CFString;
+use CFPropertyList\Types\CFArray;
+use CFPropertyList\Types\CFData;
+use CFPropertyList\Types\CFDate;
+use CFPropertyList\Types\CFBoolean;
+use CFPropertyList\Types\CFNumber;
+use CFPropertyList\Exceptions\PListException;
 
- /**
-  * CFTypeDetector
-  * Interface for converting native PHP data structures to CFPropertyList objects.
-  * @author Rodney Rehm <rodney.rehm@medialize.de>
-  * @author Christian Kruse <cjk@wwwtech.de>
-  * @package plist
-  * @subpackage plist.types
-  * @example example-create-02.php Using {@link CFTypeDetector}
-  * @example example-create-03.php Using {@link CFTypeDetector} with {@link CFDate} and {@link CFData}
-  * @example example-create-04.php Using and extended {@link CFTypeDetector}
-  */
+
 class CFTypeDetector {
   
   /**
@@ -65,7 +65,7 @@ class CFTypeDetector {
   
   /**
    * Get the default value
-   * @return CFType the default value to return if no suitable type could be determined
+   * @return \CFPropertyList\Types\CFType the default value to return if no suitable type could be determined
    */
   protected function defaultValue() {
     return new CFString();
@@ -84,7 +84,7 @@ class CFTypeDetector {
    * <br /><b>Note:</b> If $value is neither a CFType, array, numeric, boolean nor string, it is omitted.
    * @param mixed $value Value to convert to CFType
    * @param boolean $autoDictionary if true {@link CFArray}-detection is bypassed and arrays will be returned as {@link CFDictionary}.
-   * @return CFType CFType based on guessed type
+   * @return \CFPropertyList\Types\CFType CFType based on guessed type
    * @uses isAssociativeArray() to check if an array only has numeric indexes
    */
   public function toCFType($value) {
@@ -95,7 +95,7 @@ class CFTypeDetector {
 
       case is_object($value):
         // DateTime should be CFDate
-        if(class_exists( 'DateTime' ) && $value instanceof DateTime){
+        if(class_exists( 'DateTime' ) && $value instanceof \DateTime){
           return new CFDate($value->getTimestamp());
         }
         
@@ -112,7 +112,7 @@ class CFTypeDetector {
         }
       /* break; omitted */
 
-      case $value instanceof Iterator:
+      case $value instanceof \Iterator:
       case is_array($value):
         // test if $value is simple or associative array
         if(!$this->autoDictionary) {
