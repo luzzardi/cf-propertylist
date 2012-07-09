@@ -1,4 +1,5 @@
 .idea/*
 vendor/*
+examples/example-*.plist
 composer.phar
 phpunit.xml

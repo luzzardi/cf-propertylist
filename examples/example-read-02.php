@@ -13,7 +13,20 @@ ini_set( 'display_errors', 'on' );
 /**
  * Require CFPropertyList
  */
-require_once(dirname(__FILE__).'/../CFPropertyList.php');
+require_once("bootstrap.php");
+
+use CFPropertyList\Exceptions\PListException;
+use CFPropertyList\Exceptions\IOException;
+use CFPropertyList\CFPropertyList;
+use CFPropertyList\CFTypeDetector;
+use CFPropertyList\Types\CFType;
+use CFPropertyList\Types\CFDictionary;
+use CFPropertyList\Types\CFString;
+use CFPropertyList\Types\CFArray;
+use CFPropertyList\Types\CFData;
+use CFPropertyList\Types\CFDate;
+use CFPropertyList\Types\CFBoolean;
+use CFPropertyList\Types\CFNumber;
 
 
 /*
