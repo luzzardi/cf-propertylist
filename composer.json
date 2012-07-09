@@ -1,6 +1,6 @@
 {
     "name": "ronhill1394/CFPropertyList",
-    "description": "Work with plist (read, write , read binary, write binary)",
+    "description": "Work with plist (read , write , read binary plist , write binary plist)",
     "keywords": ["plist"],
     "homepage": "https://github.com/ronhill1394/CFPropertyList",
     "type": "library",
