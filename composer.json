@@ -1,8 +1,8 @@
 {
-    "name": "luzzardi/CFPropertyList",
+    "name": "luzzardi/cf-property-list",
     "description": "Work with plist (read , write , read binary plist , write binary plist)",
     "keywords": ["plist"],
-    "homepage": "https://github.com/luzzardi/CFPropertyList",
+    "homepage": "https://github.com/luzzardi/cf-propertylist",
     "type": "library",
     "license": "MIT",
     "authors": [
